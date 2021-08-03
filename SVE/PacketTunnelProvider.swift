@@ -6,7 +6,6 @@
 //  Copyright © 2020 tencent. All rights reserved.
 //
 
-
 import NetworkExtension
 import os.log
 import NEKit
@@ -23,6 +22,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     var proxyServer: ProxyServer!
     
+ 
+    
     override func startTunnel(options: [String : NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
         DDLog.removeAllLoggers()
         
@@ -36,8 +37,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let directAdapterFactory = DirectAdapterFactory()
         let httpAdapterFactory = HTTPAdapterFactory(serverHost: "192.168.111.222", serverPort: 8080, auth: nil)
         
+       let protocolCon =  protocolConfiguration
+        
         var sip = ""
         var sport = 0
+        var usrName = ""
+        var password = ""
         
         if let op = options {
             DDLogError("###4")
@@ -51,10 +56,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             DDLogError("###7 \(ip) \(port)")
             sip = ip as String
             sport = Int(port as String)!
+            
+            usrName = op["usrName"] as! NSString as String
+            password = op["password"] as! NSString as String
+
         }
-        DDLogError("11111111111111 开始连接S5,\(sip) port:\(sport)")
+        DDLogError("11111111111111 开始连接S5,\(sip) port:\(sport), usrName:\(usrName), password:\(password)")
         
-        let socksAdapterFactory = SOCKS5AdapterFactory.init(serverHost: sip, serverPort: sport)
+//        let socksAdapterFactory = SOCKS5AdapterFactory.init(serverHost: sip, serverPort: sport)
+        
+        let socksAdapterFactory = SOCKS5AdapterFactory(serverHost: sip, serverPort: sport, userName: usrName, password: password)
+        
+//        ServerAdapterFactory(serverHost: <#T##String#>, serverPort: <#T##Int#>)
+//        SOCKS5AdapterFactory(serverHost: <#T##String#>, serverPort: <#T##Int#>)
         
         let listRule = DomainListRule.init(adapterFactory: socksAdapterFactory, criteria: [
             DomainListRule.MatchCriterion.keyword("baidu"),
@@ -173,4 +187,3 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         exit(EXIT_SUCCESS)
     }
 }
-

@@ -10,11 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
+   
     var ssID:Int = 13000;
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+       
+        
         
         do{
             let btn = UIButton(frame: CGRect(x: 20, y: 100, width: 100, height: 50))
@@ -29,7 +33,7 @@ class ViewController: UIViewController {
             let btn = UIButton(frame: CGRect(x: 20, y: 200, width: 100, height: 50))
             btn.backgroundColor = .cyan
             btn.setTitleColor(.black, for: .normal)
-            btn.setTitle("连接8031", for: .normal)
+            btn.setTitle("连接1", for: .normal)
             btn.addTarget(self, action: #selector(btnTouched2), for: .touchUpInside)
             view.addSubview(btn)
         }
@@ -38,7 +42,7 @@ class ViewController: UIViewController {
             let btn = UIButton(frame: CGRect(x: 20, y: 300, width: 100, height: 50))
             btn.backgroundColor = .cyan
             btn.setTitleColor(.black, for: .normal)
-            btn.setTitle("连接8032", for: .normal)
+            btn.setTitle("连接2", for: .normal)
             btn.addTarget(self, action: #selector(btnTouched3), for: .touchUpInside)
             view.addSubview(btn)
         }
@@ -62,14 +66,14 @@ class ViewController: UIViewController {
     
     
     @objc func btnTouched2(){
-        print("连接8031")
-        VPNMgr.shared.connect("192.168.7.174", 8031)
+       // VPNMgr.shared.connect("192.168.7.9", 30001, usrName: "test1", password: "password1")
+        VPNMgr.shared.connect("121.41.171.121", 10010, usrName: "testsocket", password: "123456")
     }
     
     
     @objc func btnTouched3(){
-        print("连接8032")
-        VPNMgr.shared.connect("192.168.7.174", 8032)
+//        VPNMgr.shared.connect("192.168.7.9", 30002, usrName: "test2", password: "password2")
+        VPNMgr.shared.connect("44.195.251.117", 10085, usrName: "0eKu", password: "vu3kwy")
     }
     
     
